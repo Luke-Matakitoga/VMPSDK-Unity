@@ -1,17 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class VMPUser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private VMPController controller;
+    private void Awake()
     {
-        
+        controller = GameObject.FindObjectOfType<VMPController>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Register(int instanceId, string Username)
     {
         
     }

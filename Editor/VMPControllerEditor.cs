@@ -16,7 +16,7 @@ public class VMPControllerEditor : Editor
         if (GUILayout.Button("Test API"))
         {
             // Start the coroutine to test API connection
-            controller.StartCoroutine(controller.TestApiConnection());
+            controller.TestApiConnection();
         }
 
         // Display the API test result message
