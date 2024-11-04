@@ -1,0 +1,12 @@
+{
+  "name": "com.lukematakitoga.vmp-sdk-unity",
+  "version": "0.1.0",
+  "displayName": "VMPSDK Unity",
+  "description": "VMPSDK for Unity",
+  "unity": "2022.3",
+  "author": {
+    "name": "Luke Matakitoga",
+    "email": "luke.matakitoga2005@gmail.com",
+    "url": "https://venatus.dev/"
+  }
+}
