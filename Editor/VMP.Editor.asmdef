@@ -1,0 +1,16 @@
+{
+    "name": "VMP.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:7eea3cedf8237e9429650ee7fdb80aac"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
