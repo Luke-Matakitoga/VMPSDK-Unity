@@ -1,6 +1,6 @@
 {
   "name": "com.lukematakitoga.vmp-sdk-unity",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "displayName": "VMPSDK Unity",
   "description": "VMPSDK for Unity",
   "unity": "2022.3",
