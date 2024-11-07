@@ -10,46 +10,60 @@ public class VMPController : MonoBehaviour
     public string ApiUrl;
     public int ApiPort = 2150;
 
+    [HideInInspector] public int InstanceID;
+
     [HideInInspector] public string apiTestResult = ""; 
 
     public void TestApiConnection()
     {
-        StartCoroutine(Get<VMPPingResult>("ping", result =>
+        apiTestResult = "Testing API connection...";
+
+        StartCoroutine(Get<VMPPingResult>("ping", success =>
         {
-            if (result.result == "pong")
-            {
-                apiTestResult = "API connection successful!";
-            }
-            else
-            {
-                apiTestResult = $"Failed to connect";
-            }
+            apiTestResult = "API connection successful!";
+        }, () =>
+        {
+            apiTestResult = "API connection failed!";
         }));
     }
 
-    
-    public IEnumerator Get<TResult>(string endpoint, Action<TResult> onResult)
+    public void Register(string InstanceName)
     {
-        string url = $"{ApiUrl}:{ApiPort}/{endpoint}";
+        StartCoroutine(Post<VMPInstanceRegisterResult>("instances/reg", new Dictionary<string, string>()
+        {
+            {"InstanceName",InstanceName}
+        }, success =>
+        {
+            InstanceID = success.InstanceId;
+        }));
+    }
+    
+    public IEnumerator Get<TResult>(string endpoint, Action<TResult> success, Action failure = null)
+    {
+        string url = $"{ApiUrl}:{ApiPort}/v1/{endpoint}";
+        Debug.Log(url);
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             yield return request.SendWebRequest();
+            
+            Debug.Log(request.downloadHandler.text);
 
             if (request.result == UnityWebRequest.Result.Success)
             {
                 TResult result = JsonUtility.FromJson<TResult>(request.downloadHandler.text);
-                onResult(result);
+                success(result);
             }
             else
             {
                 Debug.LogError("Request failed: " + request.error);
+                failure();
             }
         }
     }
     
     public IEnumerator Post<TResult>(string endpoint, Dictionary<string, string> postData, Action<TResult> onResult, Action<string> onError = null)
     {
-        string url = $"{ApiUrl}:{ApiPort}/{endpoint}";
+        string url = $"{ApiUrl}:{ApiPort}/v1/{endpoint}";
         
         WWWForm form = new WWWForm();
         foreach (var entry in postData)
@@ -64,7 +78,7 @@ public class VMPController : MonoBehaviour
             if (request.result == UnityWebRequest.Result.Success)
             {
                 TResult result = JsonUtility.FromJson<TResult>(request.downloadHandler.text);
-                onResult?.Invoke(result);  // Invoke success callback
+                onResult?.Invoke(result);
             }
             else
             {
